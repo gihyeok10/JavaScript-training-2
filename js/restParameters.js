@@ -97,8 +97,74 @@ function update(birthYear, occupation) {
   this.occupation = occupation;
 }
 
-update.apply(mike, [1999, "singer"]);
+update.apply(mike, [1999, "singer"]); //배열로 반환
 update.call(tom, 1999, "농구선수");
 
 console.log(mike);
 console.log(tom);
+
+const updateMike = update.bind(mike);
+
+updateMike(1996, "police");
+console.log("변경된 마이크:", mike);
+
+console.log("================상속================");
+
+const car = {
+  wheels: 4,
+  dirve() {
+    console.log("drive....");
+  },
+};
+
+const bmw = {
+  color: "red",
+  navigator: 1,
+};
+
+const benz = {
+  color: "black",
+};
+
+const audi = {
+  color: "blue",
+};
+
+bmw.__proto__ = car;
+benz.__proto__ = car;
+audi.__proto__ = car;
+//상속해서 쓸수 있슴
+console.log(bmw.wheels);
+
+const x5 = {
+  color: "white",
+  name: "x5",
+};
+x5.__proto__ = bmw;
+
+console.log(x5.color);
+console.log(x5.navigator);
+
+const mm = function (color) {
+  this.color = color;
+};
+mm.prototype.wheels = 8;
+
+const x6 = new mm("red");
+console.log(x6.wheels);
+//이렇게도 사용 가능. 생성자 함수를 만듬
+
+async function getName() {
+  return "mike";
+}
+
+getName().then((name) => {
+  console.log(name);
+});
+
+async function showName2() {
+  const result = await getName("마으크");
+  console.log(result);
+}
+console.log("시작");
+showName2();
